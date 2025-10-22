@@ -1,0 +1,53 @@
+[
+  {
+    "id": "17845c63-5e5d-41b8-8d90-6b60e29ea7c2",
+    "lecturerName": "Mahlango",
+    "email": "ML@gmail.com",
+    "hoursWorked": 10,
+    "hourlyRate": 69,
+    "notes": null,
+    "total": 690,
+    "status": 3,
+    "createdUtc": "2025-10-21T17:20:40.1018651Z",
+    "uploads": [],
+    "lecturerEmail": ""
+  },
+  {
+    "id": "13556f2d-a435-46f5-8cea-849707bd0a54",
+    "lecturerName": "Mahlango",
+    "email": "ML@gmail.com",
+    "hoursWorked": 25,
+    "hourlyRate": 100,
+    "notes": null,
+    "total": 2500,
+    "status": 2,
+    "createdUtc": "2025-10-21T17:21:55.9124194Z",
+    "uploads": [
+      {
+        "fileName": "ST10443512 ICE 4.docx",
+        "savedAs": "db9deb38c2b247cabe31adc4c0a88e38.docx",
+        "size": 16559
+      }
+    ],
+    "lecturerEmail": ""
+  },
+  {
+    "id": "a82086c9-2c48-434b-913b-0b0471ff96c8",
+    "lecturerName": "Selepe",
+    "email": "ssm@gmail.com",
+    "hoursWorked": 12,
+    "hourlyRate": 50,
+    "notes": null,
+    "total": 600,
+    "status": 2,
+    "createdUtc": "2025-10-22T15:02:23.4077767Z",
+    "uploads": [
+      {
+        "fileName": "ST10443512 ICE 6.docx",
+        "savedAs": "0e8e262e57434faa815caff983cf082d.docx",
+        "size": 15952
+      }
+    ],
+    "lecturerEmail": "ssm@gmail.com"
+  }
+]

@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4">Contract Monthly Claim System</h1>
+    <p class="lead">Streamline your contract claim submission and approval process</p>
+</div>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3>Get Started</h3>
+                    <p>Please login or register to access the claim system</p>
+                    <div class="d-grid gap-2 d-md-block">
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary me-md-2">Login</a>
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-bg-primary">
+                <div class="card-body text-center">
+                    <h3>@ViewBag.Pending</h3>
+                    <p>Pending Claims</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-bg-warning">
+                <div class="card-body text-center">
+                    <h3>@ViewBag.Verified</h3>
+                    <p>Verified Claims</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-bg-success">
+                <div class="card-body text-center">
+                    <h3>@ViewBag.Approved</h3>
+                    <p>Approved Claims</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-bg-danger">
+                <div class="card-body text-center">
+                    <h3>@ViewBag.Rejected</h3>
+                    <p>Rejected Claims</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2 d-md-block">
+                        <a asp-controller="Claims" asp-action="Create" class="btn btn-primary me-md-2">
+                            <i class="fas fa-plus-circle me-1"></i>Submit New Claim
+                        </a>
+                        @if (User.IsInRole("Lecturer"))
+                        {
+                            <a asp-controller="Lecturer" asp-action="MyClaims" class="btn btn-outline-primary me-md-2">
+                                <i class="fas fa-list me-1"></i>View My Claims
+                            </a>
+                        }
+                        @if (User.IsInRole("Coordinator"))
+                        {
+                            <a asp-controller="Coordinator" asp-action="Index" class="btn btn-outline-warning me-md-2">
+                                <i class="fas fa-tasks me-1"></i>Coordinator Queue
+                            </a>
+                        }
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <a asp-controller="Manager" asp-action="Index" class="btn btn-outline-success me-md-2">
+                                <i class="fas fa-user-tie me-1"></i>Manager Queue
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

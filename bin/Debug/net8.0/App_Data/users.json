@@ -1,0 +1,51 @@
+[
+  {
+    "id": "599cfe3f-a925-436e-a576-e4495434cdd4",
+    "name": "Buhle",
+    "email": "bh@gmail.com",
+    "passwordHash": "",
+    "role": 1
+  },
+  {
+    "id": "36dcc055-9c66-45b2-9e05-b937cd4593a7",
+    "name": "Mike",
+    "email": "mk@gmail.com",
+    "passwordHash": "",
+    "role": 2
+  },
+  {
+    "id": "e17ecb1c-bbc2-49e7-8f4f-682ba7666a23",
+    "name": "Selepe",
+    "email": "sm@gmail.com",
+    "passwordHash": "",
+    "role": 0
+  },
+  {
+    "id": "faf8edcf-f38b-4ced-a625-ce12e53d55c8",
+    "name": "Selepe",
+    "email": "selepe@example.com",
+    "passwordHash": "pMP8tiXM8lV2Wv1eNUiDnoot5sWH1xJd\u002B6c13aadviI=",
+    "role": 1
+  },
+  {
+    "id": "e2df4dcb-5313-4eba-9d73-10deff1464dd",
+    "name": "Buhle",
+    "email": "buhle@example.com",
+    "passwordHash": "Sammyru12@",
+    "role": 2
+  },
+  {
+    "id": "fdc7915f-dda2-4192-bd2d-30ac3d39cb06",
+    "name": "Mike",
+    "email": "mike@example.com",
+    "passwordHash": "hmSFeWz6jXwM9xEWQCBbgwdkM1R1d1EdgfgDCumezqU=",
+    "role": 3
+  },
+  {
+    "id": "0d4c36f6-c37a-4acf-9fc2-91f35c5089d6",
+    "name": "Selepee",
+    "email": "ssm@gmail.com",
+    "passwordHash": "h1l3NBloXoq1syTZQElQQ3i/zG2tJ42aAxRWT1GIcOc=",
+    "role": 1
+  }
+]
