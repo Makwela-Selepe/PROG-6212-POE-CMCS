@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\IC\\source\\repos\\PROG 6212 POE\\PROG 6212 POE.csproj": {}
+    "C:\\Users\\IC\\source\\repos\\PROG-6212-POE-CMCS\\PROG 6212 POE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\IC\\source\\repos\\PROG 6212 POE\\PROG 6212 POE.csproj": {
+    "C:\\Users\\IC\\source\\repos\\PROG-6212-POE-CMCS\\PROG 6212 POE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\IC\\source\\repos\\PROG 6212 POE\\PROG 6212 POE.csproj",
+        "projectUniqueName": "C:\\Users\\IC\\source\\repos\\PROG-6212-POE-CMCS\\PROG 6212 POE.csproj",
         "projectName": "PROG 6212 POE",
-        "projectPath": "C:\\Users\\IC\\source\\repos\\PROG 6212 POE\\PROG 6212 POE.csproj",
+        "projectPath": "C:\\Users\\IC\\source\\repos\\PROG-6212-POE-CMCS\\PROG 6212 POE.csproj",
         "packagesPath": "C:\\Users\\IC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\IC\\source\\repos\\PROG 6212 POE\\obj\\",
+        "outputPath": "C:\\Users\\IC\\source\\repos\\PROG-6212-POE-CMCS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

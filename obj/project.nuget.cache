@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yV42EkDgLL4=",
+  "dgSpecHash": "4MFn01WmlQk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\IC\\source\\repos\\PROG 6212 POE\\PROG 6212 POE.csproj",
+  "projectFilePath": "C:\\Users\\IC\\source\\repos\\PROG-6212-POE-CMCS\\PROG 6212 POE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\IC\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\IC\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
