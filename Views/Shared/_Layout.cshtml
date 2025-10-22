@@ -23,6 +23,7 @@
         .card {
             border: none;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      
         }
     </style>
 </head>
@@ -32,6 +33,10 @@
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                 <i class="fas fa-file-invoice-dollar me-2"></i>ClaimSystem
             </a>
+            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline" onsubmit="return confirm('Log out now?');">
+                <button class="btn btn-outline-light btn-sm">Logout</button>
+                @Html.AntiForgeryToken()
+            </form>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
