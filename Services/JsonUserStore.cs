@@ -96,7 +96,7 @@ public class JsonUserStore : IUserStore
         new { Name = "Selepe", Email = "sm@gmail.com", Password = "Sammyru12@", Role = UserRole.Lecturer },
         new { Name = "Buhle",  Email = "buhle@example.com", Password = "Sammyru12@", Role = UserRole.Coordinator },
         new { Name = "Mike",   Email = "mike@example.com",  Password = "Sammyru12@", Role = UserRole.Manager },
-           new { Name = "Lethabo",   Email = "lethabo@example.com",  Password = "Sammyru12@", Role = UserRole.Manager },
+           new { Name = "Lethabo",   Email = "lethabo@example.com",  Password = "Sammyru12@", Role = UserRole.Coordinator },
         new { Name = "John",   Email = "John@example.com",  Password = "Sammyru12@", Role = UserRole.Manager }
 
         };

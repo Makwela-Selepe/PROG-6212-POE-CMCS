@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../ContractMonthlyClaimSystem.Tests/ContractMonthlyClaimSystem.Tests.csproj" Id="c7ba372f-ed8e-4f88-9864-c9bfc33c4448" />
   <Project Path="PROG 6212 POE.csproj" />
 </Solution>
