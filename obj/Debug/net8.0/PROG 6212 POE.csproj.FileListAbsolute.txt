@@ -231,3 +231,16 @@ C:\Users\IC\source\repos\PROG 6212 POE\obj\Debug\net8.0\PROG 6212 POE.genruntime
 C:\Users\IC\source\repos\PROG 6212 POE\obj\Debug\net8.0\ref\PROG 6212 POE.dll
 C:\Users\IC\source\repos\PROG 6212 POE\bin\Debug\net8.0\App_Data\claims.json
 C:\Users\IC\source\repos\PROG 6212 POE\bin\Debug\net8.0\App_Data\users.json
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.csproj.AssemblyReference.cache
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.AssemblyInfoInputs.cache
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.AssemblyInfo.cs
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.csproj.CoreCompileInputs.cache
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.RazorAssemblyInfo.cache
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.RazorAssemblyInfo.cs
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.sourcelink.json
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.dll
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\refint\PROG 6212 POE.dll
+C:\Users\IC\source\repos\PROG-6212-POE-CMCS\obj\Debug\net8.0\PROG 6212 POE.pdb

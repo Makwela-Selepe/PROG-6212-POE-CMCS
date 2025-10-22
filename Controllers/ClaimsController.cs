@@ -60,6 +60,9 @@ public class ClaimsController : Controller
                     SavedAs = unique,
                     Size = f.Length
                 });
+                model.Status = ClaimStatus.Pending;
+                await _store.AddAsync(model);
+
             }
         }
 
