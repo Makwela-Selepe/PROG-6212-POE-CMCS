@@ -37,25 +37,11 @@ Build the solution.
 
 Run the app (IIS Express or Kestrel) and log in using one of the seeded users or an HR-created user.
 
-4. Database & SQL Script
-
-The app uses a SQL Server database called ContractClaimsDb.
-
-A SQL script is included so the marker can recreate the database:
-
-SQL Script file:
-
-[Uploading ContractClaimsDb_SchemaAndData.sql…]()
-
-This script was generated from SQL Server Management Studio with “Schema and Data”, so it includes the table structure and sample rows.
-
-👉 In your actual project folder, put the .sql file in a Database or similar folder so this path makes sense.
-
-5. YouTube
+4. YouTube
 
 ([https://youtu.be/YOUR_VIDEO_ID_HERE](https://youtu.be/6pS1xvpM-EA))
 
-6. Main Features (Quick Summary)
+5. Main Features (Quick Summary)
 
 Lecturer
 
@@ -95,7 +81,7 @@ PDF report of approved claims
 
 CSV export of lecturers
 
-7. Unit Tests
+6. Unit Tests
 
 A separate MSTest project is included:
 
