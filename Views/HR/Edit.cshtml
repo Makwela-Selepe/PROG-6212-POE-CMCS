@@ -1,0 +1,46 @@
+﻿@model ContractMonthlyClaimSystem.Models.AppUser
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h2>Edit User</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input asp-for="Id" type="hidden" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Role" class="form-label"></label>
+        <select asp-for="Role" class="form-select"
+                asp-items="Html.GetEnumSelectList<ContractMonthlyClaimSystem.Models.UserRole>()">
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="HourlyRate" class="form-label"></label>
+        <input asp-for="HourlyRate" class="form-control" />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="ManageUsers" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

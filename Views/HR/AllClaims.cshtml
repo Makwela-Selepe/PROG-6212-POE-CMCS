@@ -1,0 +1,105 @@
+﻿@model IEnumerable<ContractMonthlyClaimSystem.Models.Claim>
+
+@{
+    ViewData["Title"] = "HR – All Claims";
+}
+
+<h2>HR – All Claims</h2>
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-3">
+        <label class="form-label">Status</label>
+        <select class="form-select" name="status">
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Verified">Verified</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">From date</label>
+        <input type="date" name="from" class="form-control" value="@(ViewBag.From ?? "")" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">To date</label>
+        <input type="date" name="to" class="form-control" value="@(ViewBag.To ?? "")" />
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">Apply</button>
+        <a asp-action="AllClaims" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <p>No claims have been submitted yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Lecturer</th>
+                <th>Email</th>
+                <th>Hours</th>
+                <th>Rate</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th>Documents</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.LecturerName</td>
+                    <td>@c.Email</td>
+                    <td>@c.HoursWorked</td>
+                    <td>@c.HourlyRate</td>
+                    <td>@c.Total</td>
+                    <td>
+                        @{
+                            string badgeClass = c.Status switch
+                            {
+                                ContractMonthlyClaimSystem.Models.ClaimStatus.Pending => "bg-secondary",
+                                ContractMonthlyClaimSystem.Models.ClaimStatus.Verified => "bg-info",
+                                ContractMonthlyClaimSystem.Models.ClaimStatus.Approved => "bg-success",
+                                ContractMonthlyClaimSystem.Models.ClaimStatus.Rejected => "bg-danger",
+                                _ => "bg-secondary"
+                            };
+                        }
+                        <span class="badge @badgeClass">@c.Status</span>
+                    </td>
+                    <td>@c.CreatedUtc.ToLocalTime()</td>
+                    <td>
+                        @if (c.Uploads != null && c.Uploads.Any())
+                        {
+                            <ul class="list-unstyled mb-0">
+                                @foreach (var u in c.Uploads)
+                                {
+                                    <li>
+                                        <a asp-controller="Claims"
+                                           asp-action="Download"
+                                           asp-route-claimId="@c.Id"
+                                           asp-route-savedAs="@u.SavedAs">
+                                            @u.FileName
+                                        </a>
+                                        <small class="text-muted">
+                                            (@(u.Size / 1024) KB)
+                                        </small>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No files</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

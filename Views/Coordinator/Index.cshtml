@@ -1,97 +1,104 @@
 ﻿@model IEnumerable<ContractMonthlyClaimSystem.Models.Claim>
+
 @{
-    ViewData["Title"] = "Coordinator Queue";
+    ViewData["Title"] = "Coordinator – Pending Claims";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h4>Coordinator - Pending Claims</h4>
-    <span class="badge bg-warning">@Model.Count() Pending</span>
-</div>
+<h2>Coordinator – Pending Claims</h2>
+<p>
+    <a asp-action="History" class="btn btn-outline-secondary">
+        View All Claims History
+    </a>
+</p>
+
+@if (ViewBag.LastAction != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.LastAction
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
 
 @if (!Model.Any())
 {
-    <div class="card">
-        <div class="card-body text-center py-5">
-            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-            <h5>No Pending Claims</h5>
-            <p class="text-muted">All claims have been processed.</p>
-        </div>
-    </div>
+    <p>No pending claims at the moment.</p>
 }
 else
 {
-    <div class="card">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Lecturer</th>
-                            <th>Hours</th>
-                            <th>Rate</th>
-                            <th>Total</th>
-                            <th>Submitted</th>
-                            <th>Documents</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var claim in Model)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="fw-semibold">@claim.LecturerName</div>
-                                    <small class="text-muted">@claim.Email</small>
-                                </td>
-                                <td>@claim.HoursWorked</td>
-                                <td>R @claim.HourlyRate.ToString("N2")</td>
-                                <td class="fw-bold">R @claim.Total.ToString("N2")</td>
-                                <td>@claim.CreatedUtc.ToString("dd MMM yyyy")</td>
-                                <td>
-                                    @if (claim.Uploads.Any())
-                                    {
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                                                <i class="fas fa-paperclip me-1"></i>@claim.Uploads.Count
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                @foreach (var file in claim.Uploads)
-                                                {
-                                                    <li>
-                                                        <a class="dropdown-item" href="~/uploads/@file.SavedAs" target="_blank">
-                                                            <i class="fas fa-file me-1"></i>@file.FileName
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted">No files</span>
-                                    }
-                                </td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <form asp-action="Verify" method="post" class="d-inline">
-                                            <input type="hidden" name="id" value="@claim.Id" />
-                                            <button type="submit" class="btn btn-success" title="Verify Claim">
-                                                <i class="fas fa-check"></i> Verify
-                                            </button>
-                                        </form>
-                                        <form asp-action="Reject" method="post" class="d-inline">
-                                            <input type="hidden" name="id" value="@claim.Id" />
-                                            <button type="submit" class="btn btn-danger" title="Reject Claim">
-                                                <i class="fas fa-times"></i> Reject
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+    <h2>Coordinator – Pending Claims</h2>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card border-warning">
+                <div class="card-body">
+                    <h6 class="card-title">Pending claims</h6>
+                    <p class="card-text display-6">@ViewBag.PendingCount</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <h6 class="card-title">Rejected (total)</h6>
+                    <p class="card-text display-6">@ViewBag.RejectedCount</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-secondary">
+                <div class="card-body">
+                    <h6 class="card-title">Oldest pending claim</h6>
+                    @if (ViewBag.OldestPending != null)
+                    {
+                        <p class="card-text">@((DateTime)ViewBag.OldestPending)</p>
+                    }
+                    else
+                    {
+                        <p class="card-text text-muted">No pending claims.</p>
+                    }
+                </div>
             </div>
         </div>
     </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Lecturer</th>
+                <th>Email</th>
+                <th>Hours</th>
+                <th>Rate</th>
+                <th>Total</th>
+                <th>Submitted</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.LecturerName</td>
+                    <td>@c.Email</td>
+                    <td>@c.HoursWorked</td>
+                    <td>@c.HourlyRate</td>
+                    <td>@c.Total</td>
+                    <td>@c.CreatedUtc.ToLocalTime()</td>
+                    <td>
+                        <form asp-action="Verify" asp-route-id="@c.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">Verify</button>
+                        </form>
+                        <form asp-action="Reject" asp-route-id="@c.Id" method="post" class="d-inline ms-1">
+                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

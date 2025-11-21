@@ -6,5 +6,11 @@ public class AppUser
     public string Name { get; set; } = "";
     public string Email { get; set; } = "";
     public string PasswordHash { get; set; } = "";
-    public UserRole Role { get; set; } // Fixed: Changed from AppUser to UserRole
+    public UserRole Role { get; set; }
+
+    // NEW
+    public decimal HourlyRate { get; set; } = 0m;
+
+    // NEW – controls login permission
+    public bool IsApproved { get; set; } = false;
 }

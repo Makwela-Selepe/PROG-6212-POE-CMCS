@@ -1,52 +1,70 @@
 ﻿@model ContractMonthlyClaimSystem.Models.Claim
+
 @{
-    ViewData["Title"] = "Submit Claim";
+    ViewData["Title"] = "Submit Monthly Claim";
 }
 
-<div class="row justify-content-center">
-  <div class="col-lg-8">
-    <div class="card shadow-sm">
-      <div class="card-header fw-semibold">Submit Monthly Claim</div>
-      <div class="card-body">
-        @* existing form *@
-        <form asp-action="Create" method="post" enctype="multipart/form-data" class="vstack gap-3">
+<h2>Submit Monthly Claim</h2>
 
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div>
-                <label class="form-label">Hours</label>
-                <input asp-for="HoursWorked" class="form-control" />
-                <span asp-validation-for="HoursWorked" class="text-danger"></span>
-            </div>
-
-            <div>
-                <label class="form-label">Hourly Rate</label>
-                <input asp-for="HourlyRate" class="form-control" />
-                <span asp-validation-for="HourlyRate" class="text-danger"></span>
-            </div>
-
-            <div>
-                <label class="form-label">Notes</label>
-                <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
-            </div>
-
-            <div>
-                <label class="form-label">Attach Documents</label>
-                <input type="file" name="files" multiple class="form-control" />
-                <div class="form-text">PDF, DOCX, XLSX, PNG, JPG — max 5 MB each.</div>
-            </div>
-
-            <div class="d-flex gap-2">
-                <button class="btn btn-primary">Submit Claim</button>
-                <a asp-controller="Lecturer" asp-action="MyClaims" class="btn btn-outline-secondary">Cancel</a>
-            </div>
-        </form>
-      </div>
+    <div class="mb-3">
+        <label asp-for="LecturerName" class="form-label"></label>
+        <input asp-for="LecturerName" class="form-control" readonly />
     </div>
-  </div>
-</div>
 
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="HoursWorked" class="form-label"></label>
+        <input asp-for="HoursWorked" class="form-control" id="hoursInput" />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+        <small class="text-muted">Maximum 180 hours per month.</small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="HourlyRate" class="form-label"></label>
+        <input asp-for="HourlyRate" class="form-control" id="rateInput" readonly />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Total Amount</label>
+        <input class="form-control" id="totalDisplay" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label"></label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+        <span asp-validation-for="Notes" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Attach Documents</label>
+        <input type="file" name="files" multiple class="form-control" />
+        <small class="text-muted">PDF, DOC, DOCX, XLSX, PNG, JPG – max 5 MB each.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Claim</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function recalcTotal() {
+            const hours = parseFloat(document.getElementById("hoursInput").value) || 0;
+            const rate = parseFloat(document.getElementById("rateInput").value) || 0;
+            const total = hours * rate;
+            document.getElementById("totalDisplay").value = total.toFixed(2);
+        }
+
+        document.getElementById("hoursInput").addEventListener("input", recalcTotal);
+        recalcTotal();
+    </script>
 }

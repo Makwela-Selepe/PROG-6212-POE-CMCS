@@ -17,16 +17,18 @@ public class HomeController : Controller
     {
         if (User.Identity.IsAuthenticated)
         {
-            // Redirect based on role
             if (User.IsInRole("Lecturer"))
                 return RedirectToAction("MyClaims", "Lecturer");
             if (User.IsInRole("Coordinator"))
                 return RedirectToAction("Index", "Coordinator");
             if (User.IsInRole("Manager"))
                 return RedirectToAction("Index", "Manager");
+            if (User.IsInRole("HR"))
+                return RedirectToAction("Index", "Hr");   // ?? new
         }
 
-        var all = await _store.GetAllAsync();
+
+    var all = await _store.GetAllAsync();
         ViewBag.Pending = all.Count(c => c.Status == ClaimStatus.Pending);
         ViewBag.Verified = all.Count(c => c.Status == ClaimStatus.Verified);
         ViewBag.Approved = all.Count(c => c.Status == ClaimStatus.Approved);

@@ -24,6 +24,8 @@
     "createdUtc": "2025-10-21T17:21:55.9124194Z",
     "uploads": [
       {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
         "fileName": "ST10443512 ICE 4.docx",
         "savedAs": "db9deb38c2b247cabe31adc4c0a88e38.docx",
         "size": 16559
@@ -43,11 +45,118 @@
     "createdUtc": "2025-10-22T15:02:23.4077767Z",
     "uploads": [
       {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
         "fileName": "ST10443512 ICE 6.docx",
         "savedAs": "0e8e262e57434faa815caff983cf082d.docx",
         "size": 15952
       }
     ],
     "lecturerEmail": "ssm@gmail.com"
+  },
+  {
+    "id": "53353cf6-e4a3-4410-86e5-0de2423f5bd8",
+    "lecturerName": "Selepee",
+    "email": "ssm@gmail.com",
+    "hoursWorked": 48,
+    "hourlyRate": 85,
+    "notes": null,
+    "total": 4080,
+    "status": 2,
+    "createdUtc": "2025-11-16T16:29:01.3372031Z",
+    "uploads": [
+      {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
+        "fileName": "CLDV6212 POE.docx",
+        "savedAs": "ec22d9ac799645dabe339566388068b6.docx",
+        "size": 1525694
+      }
+    ],
+    "lecturerEmail": "ssm@gmail.com"
+  },
+  {
+    "id": "f3e333b9-9b02-4d6e-8e94-e2223d3e3254",
+    "lecturerName": "Selepee",
+    "email": "ssm@gmail.com",
+    "hoursWorked": 12,
+    "hourlyRate": 85,
+    "notes": null,
+    "total": 1020,
+    "status": 2,
+    "createdUtc": "2025-11-16T16:29:28.0553981Z",
+    "uploads": [
+      {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
+        "fileName": "ST10443512 ICE 6.docx",
+        "savedAs": "20393e8a9b654ad09fc9d6c1d2978e37.docx",
+        "size": 15952
+      }
+    ],
+    "lecturerEmail": "ssm@gmail.com"
+  },
+  {
+    "id": "074a926b-da71-4de5-acb3-7e91c0b45f72",
+    "lecturerName": "Selepee",
+    "email": "ssm@gmail.com",
+    "hoursWorked": 10,
+    "hourlyRate": 85,
+    "notes": null,
+    "total": 850,
+    "status": 3,
+    "createdUtc": "2025-11-16T16:29:51.484549Z",
+    "uploads": [
+      {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
+        "fileName": "The Village Application Form Student 2025 1.docx",
+        "savedAs": "d516a8a263634f0a9e0108bc466426c2.docx",
+        "size": 103810
+      }
+    ],
+    "lecturerEmail": "ssm@gmail.com"
+  },
+  {
+    "id": "5d1ce45c-3e22-473a-a0da-a7f297ab2c7f",
+    "lecturerName": "Daniel",
+    "email": "DM@gmail.com",
+    "hoursWorked": 24,
+    "hourlyRate": 45,
+    "notes": null,
+    "total": 1080,
+    "status": 2,
+    "createdUtc": "2025-11-21T18:31:38.3320118Z",
+    "uploads": [
+      {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
+        "fileName": "CLDV 6212 ST10443512 Group 3.docx",
+        "savedAs": "bcf3d07f71bc4180ae8591f703aeba2d.docx",
+        "size": 144117
+      }
+    ],
+    "lecturerEmail": "DM@gmail.com"
+  },
+  {
+    "id": "08820a95-4a90-4db9-8781-ccf1549bfbd9",
+    "lecturerName": "Daniel",
+    "email": "DM@gmail.com",
+    "hoursWorked": 100,
+    "hourlyRate": 45,
+    "notes": null,
+    "total": 4500,
+    "status": 3,
+    "createdUtc": "2025-11-21T18:34:21.9901451Z",
+    "uploads": [
+      {
+        "id": 0,
+        "claimId": "00000000-0000-0000-0000-000000000000",
+        "fileName": "Ice Task 1\u00262.docx",
+        "savedAs": "92fb1796c73d49609a32e269e304d927.docx",
+        "size": 135674
+      }
+    ],
+    "lecturerEmail": "DM@gmail.com"
   }
 ]

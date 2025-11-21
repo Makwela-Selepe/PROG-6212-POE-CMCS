@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<ContractMonthlyClaimSystem.Models.Claim>
+@using ContractMonthlyClaimSystem.Models
+
 @{
     ViewData["Title"] = "My Claims";
 }
@@ -49,10 +51,10 @@ else
                                     @switch (claim.Status)
                                     {
                                         case ClaimStatus.Pending:
-                                            <span class="badge bg-warning">Pending</span>
+                                            <span class="badge bg-warning text-dark">Pending</span>
                                             break;
                                         case ClaimStatus.Verified:
-                                            <span class="badge bg-info">Verified</span>
+                                            <span class="badge bg-info text-dark">Verified</span>
                                             break;
                                         case ClaimStatus.Approved:
                                             <span class="badge bg-success">Approved</span>
@@ -66,14 +68,20 @@ else
                                     @if (claim.Uploads?.Any() == true)
                                     {
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-primary dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
                                                 <i class="fas fa-paperclip me-1"></i>@claim.Uploads.Count
                                             </button>
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu dropdown-menu-end">
                                                 @foreach (var file in claim.Uploads)
                                                 {
                                                     <li>
-                                                        <a class="dropdown-item" href="~/uploads/@file.SavedAs" target="_blank">
+                                                        <a class="dropdown-item"
+                                                           asp-controller="Claims"
+                                                           asp-action="Download"
+                                                           asp-route-claimId="@claim.Id"
+                                                           asp-route-savedAs="@file.SavedAs">
                                                             <i class="fas fa-file me-1"></i>@file.FileName
                                                         </a>
                                                     </li>

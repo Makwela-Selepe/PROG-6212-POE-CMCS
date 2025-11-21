@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ContractMonthlyClaimSystem.Controllers.HrController.HrReportRow>
+
+@{
+    ViewData["Title"] = "HR – Approved Claims Report";
+}
+
+<h2>Approved Claims Report</h2>
+<p class="mb-3">
+    <a asp-action="ExportReportsPdf" class="btn btn-primary">
+        Download PDF Report
+    </a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>No approved claims yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Lecturer</th>
+                <th>Email</th>
+                <th>Total Hours</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.LecturerName</td>
+                    <td>@r.Email</td>
+                    <td>@r.TotalHours</td>
+                    <td>@r.TotalAmount.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,41 @@
+﻿@model ContractMonthlyClaimSystem.Models.AppUser
+
+@{
+    ViewData["Title"] = "Create Lecturer";
+}
+
+<h2>Create Lecturer</h2>
+
+<form asp-action="CreateLecturer" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="HourlyRate" class="form-label"></label>
+        <input asp-for="HourlyRate" class="form-control" />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="ManageUsers" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "HR Dashboard";
+}
+
+<h1 class="mb-4">HR Dashboard</h1>
+<p>
+    <a asp-action="AllClaims" class="btn btn-outline-secondary">
+        View All Claims
+    </a>
+</p>
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text display-6">@ViewBag.TotalUsers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Claims</h5>
+                <p class="card-text display-6">@ViewBag.TotalClaims</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Approved</h5>
+                <p class="card-text display-6">@ViewBag.Approved</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Rejected</h5>
+                <p class="card-text display-6">@ViewBag.Rejected</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a class="btn btn-primary" asp-action="ManageUsers">Manage Users</a>
+    <a class="btn btn-secondary ms-2" asp-action="Reports">View Reports</a>
+</div>
+

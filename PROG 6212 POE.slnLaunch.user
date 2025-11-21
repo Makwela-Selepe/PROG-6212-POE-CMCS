@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "PROG 6212 POE.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\ContractMonthlyClaimSystem.Tests\\ContractMonthlyClaimSystem.Tests.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

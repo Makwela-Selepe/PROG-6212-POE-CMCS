@@ -1,97 +1,87 @@
 ﻿@model IEnumerable<ContractMonthlyClaimSystem.Models.Claim>
+
 @{
-    ViewData["Title"] = "Manager Queue";
+    ViewData["Title"] = "Manager – Verified Claims";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h4>Manager - Verified Claims</h4>
-    <span class="badge bg-info">@Model.Count() Verified</span>
-</div>
+<h2>Manager – Verified Claims</h2>
 
-@if (!Model.Any())
-{
-    <div class="card">
-        <div class="card-body text-center py-5">
-            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-            <h5>No Verified Claims</h5>
-            <p class="text-muted">No claims are awaiting final approval.</p>
-        </div>
-    </div>
-}
-else
-{
-    <div class="card">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Lecturer</th>
-                            <th>Hours</th>
-                            <th>Rate</th>
-                            <th>Total</th>
-                            <th>Verified</th>
-                            <th>Documents</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var claim in Model)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="fw-semibold">@claim.LecturerName</div>
-                                    <small class="text-muted">@claim.Email</small>
-                                </td>
-                                <td>@claim.HoursWorked</td>
-                                <td>R @claim.HourlyRate.ToString("N2")</td>
-                                <td class="fw-bold">R @claim.Total.ToString("N2")</td>
-                                <td>@claim.CreatedUtc.ToString("dd MMM yyyy")</td>
-                                <td>
-                                    @if (claim.Uploads.Any())
-                                    {
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                                                <i class="fas fa-paperclip me-1"></i>@claim.Uploads.Count
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                @foreach (var file in claim.Uploads)
-                                                {
-                                                    <li>
-                                                        <a class="dropdown-item" href="~/uploads/@file.SavedAs" target="_blank">
-                                                            <i class="fas fa-file me-1"></i>@file.FileName
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted">No files</span>
-                                    }
-                                </td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <form asp-action="Approve" method="post" class="d-inline">
-                                            <input type="hidden" name="id" value="@claim.Id" />
-                                            <button type="submit" class="btn btn-success" title="Approve Claim">
-                                                <i class="fas fa-check-double"></i> Approve
-                                            </button>
-                                        </form>
-                                        <form asp-action="Reject" method="post" class="d-inline">
-                                            <input type="hidden" name="id" value="@claim.Id" />
-                                            <button type="submit" class="btn btn-danger" title="Reject Claim">
-                                                <i class="fas fa-times"></i> Reject
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="card border-info">
+            <div class="card-body">
+                <h6 class="card-title">Claims awaiting approval</h6>
+                <p class="card-text display-6">@ViewBag.VerifiedCount</p>
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card border-success">
+            <div class="card-body">
+                <h6 class="card-title">Total amount awaiting approval</h6>
+                <p class="card-text display-6">@ViewBag.TotalAwaiting</p>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    <a asp-action="History" class="btn btn-outline-secondary">
+        View All Claims History
+    </a>
+</p>
+
+@if (ViewBag.LastAction != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.LastAction
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <p>No verified claims awaiting approval.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Lecturer</th>
+                <th>Email</th>
+                <th>Hours</th>
+                <th>Rate</th>
+                <th>Total</th>
+                <th>Submitted</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.LecturerName</td>
+                    <td>@c.Email</td>
+                    <td>@c.HoursWorked</td>
+                    <td>@c.HourlyRate</td>
+                    <td>@c.Total</td>
+                    <td>@c.CreatedUtc.ToLocalTime()</td>
+                    <td>
+                        <form asp-action="Approve" asp-route-id="@c.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                        </form>
+                        <form asp-action="Reject" asp-route-id="@c.Id" method="post" class="d-inline ms-1">
+                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

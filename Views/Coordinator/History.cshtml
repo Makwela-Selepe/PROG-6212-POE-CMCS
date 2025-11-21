@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ContractMonthlyClaimSystem.Models.Claim>
+@using ContractMonthlyClaimSystem.Models
+
+@{
+    ViewData["Title"] = "All Claims – Coordinator";
+}
+
+<h4 class="mb-4">All Claims (Coordinator)</h4>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Lecturer</th>
+                        <th>Email</th>
+                        <th>Submitted</th>
+                        <th>Hours</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Documents</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <td>@c.LecturerName</td>
+                            <td>@c.Email</td>
+                            <td>@c.CreatedUtc.ToLocalTime().ToString("dd MMM yyyy")</td>
+                            <td>@c.HoursWorked</td>
+                            <td>R @c.HourlyRate.ToString("N2")</td>
+                            <td class="fw-bold">R @c.Total.ToString("N2")</td>
+                            <td>
+                                @switch (c.Status)
+                                {
+                                    case ClaimStatus.Pending:
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        break;
+                                    case ClaimStatus.Verified:
+                                        <span class="badge bg-info text-dark">Verified</span>
+                                        break;
+                                    case ClaimStatus.Approved:
+                                        <span class="badge bg-success">Approved</span>
+                                        break;
+                                    case ClaimStatus.Rejected:
+                                        <span class="badge bg-danger">Rejected</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                @if (c.Uploads?.Any() == true)
+                                {
+                                    <div class="btn-group">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-primary dropdown-toggle"
+                                                data-bs-toggle="dropdown">
+                                            <i class="fas fa-paperclip me-1"></i>@c.Uploads.Count
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            @foreach (var file in c.Uploads)
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       asp-controller="Claims"
+                                                       asp-action="Download"
+                                                       asp-route-claimId="@c.Id"
+                                                       asp-route-savedAs="@file.SavedAs">
+                                                        <i class="fas fa-file me-1"></i>@file.FileName
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No files</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

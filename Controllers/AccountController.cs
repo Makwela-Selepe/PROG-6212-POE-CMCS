@@ -11,88 +11,132 @@ using SecClaim = System.Security.Claims.Claim;
 
 namespace ContractMonthlyClaimSystem.Controllers;
 
-public class AccountController(IUserStore users) : Controller
+public class AccountController : Controller
 {
-    // -------- Login --------
-    [HttpGet, AllowAnonymous]
-    public IActionResult Login() => View(new LoginViewModel());
+    private readonly IUserStore _users;
 
-    [HttpPost, AllowAnonymous]
-    public async Task<IActionResult> Login(LoginViewModel vm)
+    public AccountController(IUserStore users)
     {
-        if (!ModelState.IsValid)
-            return View(vm);
+        _users = users;
+    }
 
-        var user = await users.FindByEmailAndRoleAsync(vm.Email, vm.Role);
-        if (user is null)
+    // ---------- LOGIN ----------
+
+    [HttpGet]
+    public IActionResult Login(string? returnUrl = null)
+    {
+        ViewBag.ReturnUrl = returnUrl;
+        if (TempData["RegistrationMessage"] is string msg)
         {
-            ModelState.AddModelError("", "Invalid email or role.");
-            return View(vm);
+            ViewBag.RegistrationMessage = msg;
         }
 
-        // ✅ Pass email (string), not the AppUser object
-        if (!await users.ValidatePasswordAsync(user.Email, vm.Password))
+        return View(new LoginViewModel());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+    {
+        if (!ModelState.IsValid)
         {
-            ModelState.AddModelError("", "Invalid password.");
-            return View(vm);
+            return View(model);
+        }
+
+        // Find by email + role
+        var user = await _users.FindByEmailAndRoleAsync(model.Email, model.Role);
+        if (user == null || !await _users.ValidatePasswordAsync(model.Email, model.Password))
+        {
+            ModelState.AddModelError(string.Empty, "Invalid email, password or role.");
+            return View(model);
+        }
+
+        // NEW: block lecturers that HR has not approved yet
+        if (user.Role == UserRole.Lecturer && !user.IsApproved)
+        {
+            ModelState.AddModelError(string.Empty,
+                "Your account has been created but is waiting for HR approval. " +
+                "You will be able to log in once HR activates your profile.");
+            return View(model);
         }
 
         await SignInAsync(user);
 
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+        {
+            return Redirect(returnUrl);
+        }
+
+        // Role-based redirect
         return user.Role switch
         {
-            UserRole.Manager => RedirectToAction("Index", "Manager"),
+            UserRole.Lecturer => RedirectToAction("MyClaims", "Lecturer"),
             UserRole.Coordinator => RedirectToAction("Index", "Coordinator"),
-            _ => RedirectToAction("Index", "Home"),
+            UserRole.Manager => RedirectToAction("Index", "Manager"),
+            UserRole.HR => RedirectToAction("Index", "Hr"),
+            _ => RedirectToAction("Index", "Home")
         };
-
     }
 
-    // -------- Register (Lecturer only) --------
-    [HttpGet, AllowAnonymous]
-    public IActionResult Register() => View(new RegisterViewModel());
+    // ---------- REGISTER (Lecturer self-registration) ----------
 
-   
-    [HttpPost, AllowAnonymous]
-    public async Task<IActionResult> Register(RegisterViewModel vm)
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View(new RegisterViewModel());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterViewModel model)
     {
         if (!ModelState.IsValid)
-            return View(vm);
-
-        // Make sure the email isn't already used for a lecturer
-        var existing = await users.FindByEmailAndRoleAsync(vm.Email, UserRole.Lecturer);
-        if (existing != null)
         {
-            ModelState.AddModelError("", "This email is already registered.");
-            return View(vm);
+            return View(model);
         }
 
-        // Try create the lecturer
-        var newUser = await users.CreateLecturerAsync(vm.Name, vm.Email, vm.Password); // returns AppUser?
-        if (newUser is null)
+        // Make sure email is unique
+        var allUsers = await _users.GetAllAsync();
+        if (allUsers.Any(u => u.Email.Equals(model.Email, StringComparison.OrdinalIgnoreCase)))
         {
-            ModelState.AddModelError("", "Something went wrong while creating the account.");
-            return View(vm);
+            ModelState.AddModelError(string.Empty, "An account with this email already exists.");
+            return View(model);
         }
 
-        // Sign in and go home
-        await SignInAsync(newUser);
-        return RedirectToAction("Index", "Home");
+        // Create lecturer as NOT approved yet
+        var lecturer = new AppUser
+        {
+            Id = Guid.NewGuid(),
+            Name = model.Name,
+            Email = model.Email,
+            Role = UserRole.Lecturer,
+            PasswordHash = HashPassword(model.Password),
+            HourlyRate = 350m,   // default – HR can later change this
+            IsApproved = false   // *** key line ***
+        };
+
+        allUsers.Add(lecturer);
+        await _users.SaveAsync(allUsers);
+
+        TempData["RegistrationMessage"] =
+            "Your lecturer account has been created and sent to HR for approval. " +
+            "You will be able to log in once HR activates your profile.";
+
+        return RedirectToAction(nameof(Login));
     }
 
+    // ---------- ACCESS DENIED / LOGOUT ----------
 
-    // -------- Logout / AccessDenied --------
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpGet]
+    public IActionResult Denied() => View();
+
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction(nameof(Login));
     }
 
-    [AllowAnonymous]
-    public IActionResult Denied() => View();
+    // ---------- Helpers ----------
 
-    // -------- Helper (required to avoid CS1503) --------
     private async Task SignInAsync(AppUser user)
     {
         var claims = new List<SecClaim>
@@ -103,9 +147,18 @@ public class AccountController(IUserStore users) : Controller
             new(ClaimTypes.Role,  user.Role.ToString())
         };
 
-        var identity  = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+    }
+
+    // Same hashing as JsonUserStore
+    private string HashPassword(string password)
+    {
+        using var sha = System.Security.Cryptography.SHA256.Create();
+        var bytes = System.Text.Encoding.UTF8.GetBytes(password);
+        var hash = sha.ComputeHash(bytes);
+        return Convert.ToBase64String(hash);
     }
 }

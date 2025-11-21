@@ -54,8 +54,7 @@ public class JsonUserStore : IUserStore
         var user = await FindByEmailAsync(email);
         if (user == null) return false;
 
-        // In a real application, use proper password hashing like BCrypt
-        // This is a simplified version for demo purposes
+        // Simple demo hashing – fine for this assignment
         return user.PasswordHash == HashPassword(password);
     }
 
@@ -84,22 +83,22 @@ public class JsonUserStore : IUserStore
     {
         var users = await GetAllAsync();
 
-        // ✅ Clear out old default users (optional if you want a full reset)
+        // Remove old defaults if they exist
         users.RemoveAll(u =>
-            u.Email.Equals("selepe@example.com", StringComparison.OrdinalIgnoreCase) ||
+            u.Email.Equals("sm@gmail.com", StringComparison.OrdinalIgnoreCase) ||
             u.Email.Equals("buhle@example.com", StringComparison.OrdinalIgnoreCase) ||
-            u.Email.Equals("mike@example.com", StringComparison.OrdinalIgnoreCase));
+            u.Email.Equals("mike@example.com", StringComparison.OrdinalIgnoreCase) ||
+            u.Email.Equals("hr@example.com", StringComparison.OrdinalIgnoreCase));
 
-        // ✅ Add NEW default users with your desired passwords
+        // Default users (now includes HR)
         var defaultUsers = new[]
         {
-        new { Name = "Selepe", Email = "sm@gmail.com", Password = "Sammyru12@", Role = UserRole.Lecturer },
-        new { Name = "Buhle",  Email = "buhle@example.com", Password = "Sammyru12@", Role = UserRole.Coordinator },
-        new { Name = "Mike",   Email = "mike@example.com",  Password = "Sammyru12@", Role = UserRole.Manager },
-           new { Name = "Lethabo",   Email = "lethabo@example.com",  Password = "Sammyru12@", Role = UserRole.Coordinator },
-        new { Name = "John",   Email = "John@example.com",  Password = "Sammyru12@", Role = UserRole.Manager }
+    new { Name = "Selepe",   Email = "sm@gmail.com",        Password = "Sammyru12@", Role = UserRole.Lecturer,   HourlyRate = 350m },
+    new { Name = "Buhle",    Email = "buhle@example.com",   Password = "Sammyru12@", Role = UserRole.Coordinator, HourlyRate = 0m   },
+    new { Name = "Mike",     Email = "mike@example.com",    Password = "Sammyru12@", Role = UserRole.Manager,     HourlyRate = 0m   },
+    new { Name = "HR Admin", Email = "hr@example.com",      Password = "Sammyru12@", Role = UserRole.HR,         HourlyRate = 0m   }
+};
 
-        };
 
         foreach (var user in defaultUsers)
         {
@@ -119,20 +118,20 @@ public class JsonUserStore : IUserStore
         await SaveAsync(users);
     }
 
-
-    private async Task SaveAsync(List<AppUser> users)
+    public Task SaveAsync(List<AppUser> users)
     {
         lock (_lock)
         {
             var text = JsonSerializer.Serialize(users, _json);
             File.WriteAllText(_filePath, text);
         }
+
+        return Task.CompletedTask;
     }
 
     private string HashPassword(string password)
     {
-        // In a real application, use proper password hashing like BCrypt
-        // This is a simplified version for demo purposes
+        // Simple SHA256 hash – good enough for the assignment
         using var sha = System.Security.Cryptography.SHA256.Create();
         var bytes = System.Text.Encoding.UTF8.GetBytes(password);
         var hash = sha.ComputeHash(bytes);
